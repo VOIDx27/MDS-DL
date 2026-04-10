@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MDS-DL — Malware Detection System | Deep Learning Powered Threat Analysis</title>
+  <meta name="description" content="Enterprise malware detection platform powered by deep learning. Real-time threat analysis with 97%+ detection rate, MITRE ATT&CK mapping, and explainable AI." />
+  <meta name="keywords" content="malware detection, deep learning, cybersecurity, threat analysis, SOC, MITRE ATT&CK" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>" />
+  
+  <!-- Cyberpunk Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  
+  <!-- 3D Interactions -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+
+  <link rel="stylesheet" href="/src/styles/variables.css" />
+  <link rel="stylesheet" href="/src/styles/base.css" />
+  <link rel="stylesheet" href="/src/styles/components.css" />
+  <link rel="stylesheet" href="/src/styles/layout.css" />
+  <link rel="stylesheet" href="/src/styles/animations.css" />
+</head>
+<body>
+  <canvas id="particles-canvas"></canvas>
+  <div class="scanline-overlay"></div>
+
+  <div id="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">🛡️</div>
+        <div class="sidebar-brand">
+          <h2>MDS-DL</h2>
+          <span>Threat Detection v1.0</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+      <div class="sidebar-footer">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+          ◀
+        </button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar" id="topbar"></header>
+      <div class="page-content" id="page-content"></div>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

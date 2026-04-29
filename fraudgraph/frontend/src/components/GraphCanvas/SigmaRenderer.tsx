@@ -64,11 +64,15 @@ export const SigmaRenderer: React.FC<Props> = ({ data, onNodeClick, onNodeHover 
       onNodeClick(node);
     });
 
-    sigma.on("enterNode", ({ node }) => {
-      const pos = sigma.getNodeDisplayData(node);
-      const nData = nodeMap.get(node);
-      if (pos && nData) {
-        onNodeHover(nData, pos.x, pos.y);
+    sigma.on("enterNode", (e) => {
+      const pos = sigma.getNodeDisplayData(e.node);
+      const nData = nodeMap.get(e.node);
+      if (pos && nData && containerRef.current) {
+        const viewportPos = sigma.graphToViewport(pos as any);
+        const rect = containerRef.current.getBoundingClientRect();
+        const clientX = rect.left + viewportPos.x;
+        const clientY = rect.top + viewportPos.y;
+        onNodeHover(nData, clientX, clientY);
       }
     });
 

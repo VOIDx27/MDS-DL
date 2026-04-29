@@ -55,6 +55,10 @@ export const SigmaRenderer: React.FC<Props> = ({ data, onNodeClick, onNodeHover 
       renderEdgeLabels: false,
       allowInvalidContainer: true,
       defaultEdgeType: "arrow",
+      labelColor: { color: "#e2e8f0" },
+      labelFont: "JetBrains Mono, monospace",
+      labelSize: 12,
+      labelWeight: "600",
     });
     
     sigmaRef.current = sigma;

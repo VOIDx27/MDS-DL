@@ -81,6 +81,20 @@
   z-index: 0;
 }
 
+/* Map background */
+.graph-viewport::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
+  background-size: 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: invert(1) opacity(0.04);
+  pointer-events: none;
+  z-index: 0;
+}
+
 /* ─── Controls Toolbar ────────────────────────────────────────────────────── */
 
 .controls-toolbar {

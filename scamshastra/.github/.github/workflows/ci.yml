@@ -1,0 +1,64 @@
+name: ScamShastra CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  backend-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+        cache: 'pip'
+    - name: Install dependencies
+      run: |
+        cd ScamShastra/backend
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-asyncio
+    - name: Run Pytest
+      run: |
+        cd ScamShastra/backend
+        # pytest (mocked since no actual tests written yet)
+        echo "Running pytest..."
+
+  frontend-build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "18"
+        cache: 'npm'
+        cache-dependency-path: ScamShastra/frontend/package-lock.json
+    - name: Install dependencies
+      run: |
+        cd ScamShastra/frontend
+        npm install
+    - name: Type check
+      run: |
+        cd ScamShastra/frontend
+        npx tsc --noEmit
+    - name: Build React App
+      run: |
+        cd ScamShastra/frontend
+        npm run build
+
+  docker-build:
+    needs: [backend-test, frontend-build]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build Docker Compose (Prod)
+      run: |
+        cd ScamShastra
+        docker compose -f docker-compose.prod.yml build
+

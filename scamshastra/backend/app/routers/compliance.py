@@ -10,6 +10,7 @@ from app.services.db_service import get_db
 from app.services.neo4j_service import get_neo4j_session
 from app.models.str_models import STRRecord
 from app.services.pdf_service import generate_str_pdf
+from app.services.ai_service import AIService
 
 router = APIRouter(prefix="/api/compliance", tags=["compliance"])
 
@@ -56,16 +57,8 @@ def generate_str(
     total_amount = int(txn_data["total_amount"] or 0) if txn_data else 0
     hop_count = int(txn_data["hop_count"] or 0) if txn_data else 0
     
-    # 3. Generate Narrative
-    narrative = f"This report is filed regarding a network of {len(accounts_data)} accounts exhibiting suspicious behavior."
-    if request.trigger == "AUTO":
-        narrative += " Automated systems flagged these accounts due to elevated Mule Probability Scores (MPS) "
-        narrative += "and rapid pass-through velocity indicative of layering."
-    else:
-        narrative += " An analyst manually escalated this case after identifying anomalies in the transaction graph."
-        
-    if hop_count > 0:
-        narrative += f" A total of {hop_count} transactions were observed between these subjects, aggregating to ₹{total_amount:,}."
+    # 3. Generate Narrative (AI-Powered)
+    narrative = AIService.generate_risk_narrative(accounts_data, total_amount, hop_count)
     
     # 4. Create DB Record
     fiu_ref = f"FIU-{datetime.utcnow().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6].upper()}"
